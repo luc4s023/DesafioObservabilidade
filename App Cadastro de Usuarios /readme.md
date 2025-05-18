@@ -1,10 +1,10 @@
 
 ## [Requisito] PostgreSQL
 
-Um pré-requisito bem importante para rodar o sistema de cadastro de usurios é a instalação e configuração do banco PostgreSQL no seu ambiente para o sistema rodar, então segue um passo a passo de como fazer isso antes de rodar o sistema:
+Um pré-requisito bem importante para rodar o sistema de cadastro de usuários é a instalação e configuração do banco PostgreSQL no seu ambiente para o sistema rodar, então segue um passo a passo de como fazer isso antes de rodar o sistema:
 
 
-> **Nota:** Estou usando um Ubunto Desktop para rodar esse ambiente, pode ser que alguns comandos mudem coforme o seu sistema operacional
+> **Nota:** Estou usando um Ubuntu Desktop para rodar esse ambiente, pode ser que alguns comandos mudem coforme o seu sistema operacional
 
 
 1 - Faça o download e instalação do PostgreSQL:
@@ -20,7 +20,7 @@ sudo apt install postgresql postgresql-contrib
 sudo systemctl status postgresql
 ```
 
-3 - Por padrão a instalação cria um usuario chamado `postgres` vamos usar ele para acessar o psql e alterar a senha desse usuario:
+3 - Por padrão a instalação cria um usuário chamado `postgres` vamos usar ele para acessar o psql e alterar a senha desse usuário:
 
 ```bash
 sudo -i -u postgres
@@ -34,18 +34,18 @@ ALTER USER postgres PASSWORD 'digite_uma_senha';
 
 5 - para sair do `psql` use `\q` ou `exit`;
 
-6 - Adicione a string de conexão a variavel `POSTGRES_DSN`:
+6 - Adicione a string de conexão a variável `POSTGRES_DSN`:
 
 ```bash
 export POSTGRES_DSN="postgresql://postgres:<senha>@localhost:5432/postgres"
 ```
-Pronto seu banco PostgreSQL estara configurado da forma corretada para executar a aplicação!!!
+Pronto seu banco PostgreSQL estará configurado da forma corretada para executar a aplicação!!!
 
-## Como rodar o sistema de cadastro de usuarios
+## Como rodar o sistema de cadastro de usuários
 
-1 - Faça o clone desse repositorio em sua maquina para ter acesso ao codigo da aplicação
+1 - Faça o clone desse repositório em sua máquina para ter acesso ao código da aplicação
 
-2 - Com o golang instalado na sua maquina execute o comando:
+2 - Com o golang instalado na sua máquina execute o comando:
 ```bash
 go run usuarios.go
 ```
