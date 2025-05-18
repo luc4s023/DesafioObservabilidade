@@ -1,1 +1,1 @@
-## Como rodar o Siatema de cadastro de usuarios
+## Como rodar o sistema de cadastro de usuarios
