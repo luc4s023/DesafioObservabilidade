@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: usuarios-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: <digite_sua_senha>
+      POSTGRES_DB: cadastro_user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - usuarios-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: usuarios-go-app
+    environment:
+      POSTGRES_DSN: "postgres://postgres:<digite_sua_senha>@postgres:5432/cadastro_user_db?sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - usuarios-network
+
+networks:
+  usuarios-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
