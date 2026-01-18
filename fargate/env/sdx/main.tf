@@ -303,10 +303,6 @@ module "ecs_service" {
   # Deployment
   deployment_maximum_percent         = var.deployment_maximum_percent
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
-  force_new_deployment               = var.force_new_deployment
-
-  # ECS Exec
-  enable_execute_command = var.enable_ecs_exec
 
   tags = local.common_tags
 }
