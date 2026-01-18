@@ -1,0 +1,97 @@
+################################################################################
+# EXEMPLO DE CONFIGURAÇÃO - Renomeie para terraform.tfvars e ajuste os valores
+################################################################################
+
+# General
+aws_region   = "us-east-1"
+environment  = "dev"
+project_name = "desafio-observabilidade"
+app_name     = "usuarios-api"
+
+# Network (SUBSTITUA com seus IDs reais)
+vpc_id             = "vpc-0123456789abcdef0"
+private_subnet_ids = ["subnet-private1", "subnet-private2"]
+public_subnet_ids  = ["subnet-public1", "subnet-public2"]
+assign_public_ip   = false
+
+# Container
+container_image = "123456789.dkr.ecr.us-east-1.amazonaws.com/usuarios-api:latest"
+# Ou use imagem pública para teste:
+# container_image = "nginx:latest"
+
+container_port = 3000
+
+# Variáveis de ambiente da aplicação
+container_environment = [
+  {
+    name  = "NODE_ENV"
+    value = "development"
+  },
+  {
+    name  = "PORT"
+    value = "3000"
+  },
+  {
+    name  = "LOG_LEVEL"
+    value = "debug"
+  }
+]
+
+# Secrets (opcional - descomente e ajuste)
+# container_secrets = [
+#   {
+#     name      = "DATABASE_URL"
+#     valueFrom = "arn:aws:secretsmanager:us-east-1:123456789:secret:db-url-xyz"
+#   },
+#   {
+#     name      = "API_KEY"
+#     valueFrom = "arn:aws:ssm:us-east-1:123456789:parameter/api-key"
+#   }
+# ]
+
+# Task
+task_cpu      = 256
+task_memory   = 512
+desired_count = 2
+
+# Health Check
+enable_health_check      = true
+health_check_command     = ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+health_check_interval    = 30
+health_check_timeout     = 5
+health_check_retries     = 3
+health_check_start_period = 60
+
+# Load Balancer
+enable_load_balancer              = true
+alb_internal                      = false
+alb_ingress_cidr_blocks          = ["0.0.0.0/0"]
+enable_deletion_protection        = false
+health_check_grace_period_seconds = 60
+
+# Target Group Health Check
+target_health_check_path               = "/health"
+target_health_check_matcher            = "200"
+target_health_check_interval           = 30
+target_health_check_timeout            = 5
+target_health_check_healthy_threshold  = 2
+target_health_check_unhealthy_threshold = 3
+
+# Auto Scaling
+enable_autoscaling        = true
+autoscaling_min_capacity  = 2
+autoscaling_max_capacity  = 10
+autoscaling_cpu_target    = 70
+autoscaling_memory_target = 80
+
+# Deployment
+deployment_maximum_percent         = 200
+deployment_minimum_healthy_percent = 100
+force_new_deployment               = false
+
+# Monitoring
+enable_container_insights = true
+log_retention_days       = 7
+
+# Debug
+enable_ecs_exec = true
